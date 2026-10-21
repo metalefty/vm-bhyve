@@ -53,8 +53,8 @@ Usage:
     vm switch create [options] <name>
     vm switch vlan <name> <vlan-id>
     vm switch nat <name> <on|off>
-    vm switch address <name> <a.b.c.d/xx|3fff::abcd/xx|none>
-    vm switch address <name> <a.b.c.d/xx|3fff::abcd/xx> delete
+    vm switch address [options] <name> <a.b.c.d/xx|3fff::abcd/xx|none>
+    vm switch address [options] <name> <a.b.c.d/xx|3fff::abcd/xx> delete
     vm switch private <name> <on|off>
     vm switch add <name> <interface>
     vm switch remove <name> <interface>
