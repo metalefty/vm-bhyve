@@ -309,7 +309,7 @@ switch::nat(){
 #
 switch::address(){
     local _switch _addr _delete
-    local _id _type
+    local _id _type _vlan
 
     # process options
     while getopts n: _opt; do

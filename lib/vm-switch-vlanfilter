@@ -214,6 +214,8 @@ switch::vlanfilter::address(){
         echo "${_vlan}" | egrep -qs '^[0-9]{1,4}$'
         [ $? -eq 0 ] || util::err "invalid vlan number"
         [ ${_vlan} -ge 4095 ] && util::err "invalid vlan number"
+    else
+        util::err "vlan number (-n) is required to configure address on vlanfilter switch"
     fi
 
     if [ "${_delete}" = "delete" ]; then
@@ -262,6 +264,8 @@ switch::vlanfilter::address(){
                 [ "${_curr6}" = "${_addr}" ] &&  util::err "The specified IP address is already assigned to this switch."
                 [ -n "${_curr6}" ] && { util::confirm "This switch already has ${_curr6} assigned, replace it?" || exit 0; }
                 config::core::set "addr6_${_switch}_${_vlan}" "${_addr}"
+                # find vlan interface
+                #ifconfig -l | grep -qw "${_id}.${_vlan}"
                 ifconfig "${_id}.${_vlan}" create inet6 "${_addr}" auto_linklocal
                 # remove the previous IPv6 address
                 # because the current config::core design assumes a single IPv6 address per a switch
@@ -271,7 +275,7 @@ switch::vlanfilter::address(){
                 [ "${_curr}" = "${_addr}" ] &&  util::err "The specified IP address is already assigned to this switch."
                 [ -n "${_curr}" ] && { util::confirm "This switch already has ${_curr} assigned, replace it?" || exit 0; }
                 config::core::set "addr_${_switch}_${_vlan}" "${_addr}"
-                ifconfig "${_id}.${_vlan}" inet "${_addr}"
+                ifconfig "${_id}.${_vlan}" create inet "${_addr}"
                 ;;
         esac
     fi
